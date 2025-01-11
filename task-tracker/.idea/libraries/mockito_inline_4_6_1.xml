@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="mockito-inline-4.6.1">
+    <ANNOTATIONS>
+      <root url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-inline/4.6.1/mockito-inline-4.6.1.jar!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-inline/4.6.1/mockito-inline-4.6.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-inline/4.6.1/mockito-inline-4.6.1.jar!/" />
+    </JAVADOC>
+    <NATIVE>
+      <root url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-inline/4.6.1/mockito-inline-4.6.1.jar!/" />
+    </NATIVE>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-inline/4.6.1/mockito-inline-4.6.1.jar!/" />
+    </SOURCES>
+    <jarDirectory url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-inline/4.6.1/mockito-inline-4.6.1.jar!/" recursive="false" />
+    <jarDirectory url="jar://$MAVEN_REPOSITORY$/org/mockito/mockito-inline/4.6.1/mockito-inline-4.6.1.jar!/" recursive="false" type="SOURCES" />
+  </library>
+</component>
