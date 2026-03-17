@@ -1,6 +1,7 @@
 package com.epam.service;
 
 import com.epam.exception.UserAlreadyExistsException;
+import com.epam.model.Role;
 import com.epam.model.SystemUser;
 import com.epam.model.TokenResponse;
 import com.epam.model.dto.SystemUserDTO;
@@ -37,6 +38,7 @@ public class AuthService {
 
     /**
      * Registers a new user after verifying email uniqueness and encoding the password.
+     * Assigns {@link Role#ROLE_USER} as the default role.
      *
      * @param systemUserDto registration data
      * @return the created user as a DTO (password excluded)
@@ -52,6 +54,9 @@ public class AuthService {
         SystemUser systemUser = toEntity(systemUserDto);
         systemUser.setPassword(passwordEncoder.encode(systemUserDto.getPassword()));
 
+        // Default role for self-registration; admin creation should use a separate secured endpoint
+        systemUser.setRole(Role.ROLE_USER);
+
         SystemUser savedUser = systemUserRepository.save(systemUser);
         log.info("User registered successfully with email: {}", savedUser.getEmail());
 
@@ -59,7 +64,7 @@ public class AuthService {
     }
 
     /**
-     * Authenticates a user and issues a JWT token.
+     * Authenticates a user and issues a JWT token containing their role.
      *
      * @param systemUserDto login credentials
      * @return token response containing the JWT
@@ -95,6 +100,7 @@ public class AuthService {
                 .firstname(entity.getFirstname())
                 .lastname(entity.getLastname())
                 .email(entity.getEmail())
+                .role(entity.getRole())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .build();

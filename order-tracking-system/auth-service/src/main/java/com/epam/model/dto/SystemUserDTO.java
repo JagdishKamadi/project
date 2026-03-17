@@ -1,5 +1,6 @@
 package com.epam.model.dto;
 
+import com.epam.model.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -26,6 +27,9 @@ public class SystemUserDTO {
 
     @NotBlank(message = "Password is required")
     private String password;
+
+    /** User role; returned in responses but not required during registration. */
+    private Role role;
 
     private Instant createdAt;
     private Instant updatedAt;

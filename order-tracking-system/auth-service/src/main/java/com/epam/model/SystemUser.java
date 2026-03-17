@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.proxy.HibernateProxy;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.Instant;
@@ -45,6 +46,13 @@ public class SystemUser implements UserDetails {
     @NotBlank
     private String password;
 
+    /**
+     * User's role for authorization. Defaults to ROLE_USER at the application level.
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
     @CreationTimestamp
     @Column(updatable = false)
     private Instant createdAt;
@@ -52,12 +60,17 @@ public class SystemUser implements UserDetails {
     @UpdateTimestamp
     private Instant updatedAt;
 
+    /**
+     * Returns the user's role as a Spring Security granted authority.
+     */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    /** Uses email as the Spring Security username. */
+    /**
+     * Uses email as the Spring Security username.
+     */
     @Override
     public String getUsername() {
         return email;
