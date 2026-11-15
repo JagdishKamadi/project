@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Employee } from '../../classes/employee';
+import { EmployeeService } from '../../service/employee-service';
 
 @Component({
   selector: 'app-employee-list-component',
@@ -8,9 +9,14 @@ import { Employee } from '../../classes/employee';
   styleUrl: './employee-list-component.css',
 })
 export class EmployeeListComponent implements OnInit {
-  employees: Employee[] = [];
+  employees = signal<Employee[]>([]);
+
+  constructor(private employeeService: EmployeeService) {}
+  
   ngOnInit(): void {
-    this.employees.push(new Employee(1, 'Jack', 'Admin', 21, 'jack@example.com'));
-    this.employees.push(new Employee(2, 'Joy', 'Cena', 20, 'jpy@example.com'));
+    this.employeeService.getEmployeeList().subscribe({
+      next: (data) => this.employees.set(data),
+      error: (err) => console.error('Failed to load employees', err),
+    });
   }
 }

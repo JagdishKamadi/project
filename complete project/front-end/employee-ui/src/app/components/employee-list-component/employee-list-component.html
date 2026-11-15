@@ -9,7 +9,7 @@
     <th>Email ID</th>
   </thead>
   <tbody>
-    @for (e of employees; track e.id) {
+    @for (e of employees(); track e.id) {
       <tr>
         <td>{{ e.id }}</td>
         <td>{{ e.firstName }}</td>
