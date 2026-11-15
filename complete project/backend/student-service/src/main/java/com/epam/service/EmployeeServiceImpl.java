@@ -6,6 +6,9 @@ import com.epam.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
@@ -22,5 +25,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         Employee employee = objectMapper.convertValue(employeeDTO, Employee.class);
         Employee savedEmployee = employeeRepository.save(employee);
         return objectMapper.convertValue(savedEmployee, EmployeeDTO.class);
+    }
+
+    @Override
+    public List<EmployeeDTO> getEmployees() {
+        List<Employee> employees = employeeRepository.findAll();
+        List<EmployeeDTO> employeeDTOS = new ArrayList<>();
+        for (Employee employee : employees) {
+            employeeDTOS.add(objectMapper.convertValue(employee, EmployeeDTO.class));
+        }
+        return employeeDTOS;
     }
 }
