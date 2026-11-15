@@ -1,0 +1,25 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: student-service
+  main:
+    banner-mode: off
+
+  # Database Connection
+  datasource:
+    url: jdbc:mysql://localhost:3306/student_db
+    username: ${USERNAME}
+    password: ${PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # JPA & Hibernate Settings
+  jpa:
+    hibernate:
+      ddl-auto: update # Options: none, validate, update, create, create-drop
+    show-sql: true # Logs SQL queries to the console
+    properties:
+      hibernate:
+        format_sql: true # Formats logged SQL nicely
+        dialect: org.hibernate.dialect.MySQLDialect
