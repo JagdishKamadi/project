@@ -12,11 +12,8 @@ export class EmployeeListComponent implements OnInit {
   employees = signal<Employee[]>([]);
 
   constructor(private employeeService: EmployeeService) {}
-  
+
   ngOnInit(): void {
-    this.employeeService.getEmployeeList().subscribe({
-      next: (data) => this.employees.set(data),
-      error: (err) => console.error('Failed to load employees', err),
-    });
+    this.employeeService.getEmployeeList().subscribe((data) => this.employees.set(data));
   }
 }

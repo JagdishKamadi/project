@@ -1,22 +1,52 @@
-<!-- employee-list-component.html -->
-<p>Employee list works!</p>
-<table>
-  <thead>
-    <th>Id</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Age</th>
-    <th>Email ID</th>
-  </thead>
-  <tbody>
-    @for (e of employees(); track e.id) {
+<div>
+  <!-- employee-list-component.html -->
+  <h3>Employee list</h3>
+  <div class="table-container">
+  <table>
+    <thead>
       <tr>
-        <td>{{ e.id }}</td>
-        <td>{{ e.firstName }}</td>
-        <td>{{ e.lastName }}</td>
-        <td>{{ e.age }}</td>
-        <td>{{ e.email }}</td>
+      <th>Id</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Age</th>
+      <th>Email ID</th>
+      <th>House Number</th>
+      <th>Building Name</th>
+      <th>Street</th>
+      <th>Landmark</th>
+      <th>Locality</th>
+      <th>Village</th>
+      <th>City</th>
+      <th>District</th>
+      <th>State</th>
+      <th>Country</th>
+      <th>Pincode</th>
+      <th>Address Type</th>
       </tr>
-    }
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      @for (e of employees(); track e.id) {
+        <tr>
+          <td>{{ e.id }}</td>
+          <td>{{ e.firstName }}</td>
+          <td>{{ e.lastName }}</td>
+          <td>{{ e.age }}</td>
+          <td>{{ e.email }}</td>
+          <td>{{ e.address.houseNumber }}</td>
+          <td>{{ e.address.buildingName }}</td>
+          <td>{{ e.address.street }}</td>
+          <td>{{ e.address.landmark }}</td>
+          <td>{{ e.address.locality }}</td>
+          <td>{{ e.address.village }}</td>
+          <td>{{ e.address.city }}</td>
+          <td>{{ e.address.district }}</td>
+          <td>{{ e.address.state }}</td>
+          <td>{{ e.address.country }}</td>
+          <td>{{ e.address.pincode }}</td>
+          <td>{{ e.address.addressType }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+  </div>
+</div>
