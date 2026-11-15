@@ -1,2 +1,22 @@
 <!-- employee-list-component.html -->
 <p>Employee list works!</p>
+<table>
+  <thead>
+    <th>Id</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Age</th>
+    <th>Email ID</th>
+  </thead>
+  <tbody>
+    @for (e of employees; track e.id) {
+      <tr>
+        <td>{{ e.id }}</td>
+        <td>{{ e.firstName }}</td>
+        <td>{{ e.lastName }}</td>
+        <td>{{ e.age }}</td>
+        <td>{{ e.email }}</td>
+      </tr>
+    }
+  </tbody>
+</table>
