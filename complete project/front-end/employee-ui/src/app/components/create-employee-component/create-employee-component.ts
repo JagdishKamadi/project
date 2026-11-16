@@ -1,23 +1,19 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Employee } from '../../classes/employee';
 import { EmployeeService } from '../../service/employee-service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-employee-component',
-  imports: [ReactiveFormsModule],
+  imports: [FormsModule],
   templateUrl: './create-employee-component.html',
   styleUrl: './create-employee-component.css',
 })
 export class CreateEmployeeComponent {
   employee: Employee = new Employee();
-  employeeForm = new FormGroup({
-    firstname: new FormControl(''),
-    lastname: new FormControl(''),
-    email: new FormControl(''),
-    age: new FormControl(''),
-  });
+
   constructor(
     private employeeService: EmployeeService,
     private router: Router,
@@ -25,23 +21,20 @@ export class CreateEmployeeComponent {
 
   private saveEmployee(): void {
     this.employeeService.createEmployee(this.employee).subscribe({
-      next: (data) => console.log(data),
-      error: (err) => console.log('Error `${err}`'),
+      next: (data) => {
+        console.log(data);
+        this.goToEmployeeListPage();
+      },
+      error: (err) => console.log(err),
     });
-    this.goToEmployeeList();
   }
 
-  private goToEmployeeList(): void {
+  private goToEmployeeListPage(): void {
     this.router.navigate(['/employees']);
   }
 
   public onSubmit(): void {
-    const value = this.employeeForm.value;
-    this.employee.firstName = value.firstname ?? '';
-    this.employee.lastName = value.lastname ?? '';
-    this.employee.email = value.email ?? '';
-    this.employee.age = Number(value.age);
-    console.log(this.employee);
+    console.log('Employee Data', this.employee);
     this.saveEmployee();
   }
 }

@@ -1,28 +1,31 @@
-<form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-  <label>First Name: </label>
+<form (ngSubmit)="onSubmit()">
+  <label id="firstname">firstname: </label>
   <input
     type="text"
     placeholder="Enter firstname"
     id="firstname"
-    formControlName="firstname"
+    name="firstName"
+    [(ngModel)]="employee.firstName"
   />
   <br />
+
+  <label id="lastname">lastname: </label>
+  <input
+    type="text"
+    placeholder="Enter lastname"
+    id="lastname"
+    name="lastName"
+    [(ngModel)]="employee.lastName"
+  />
   <br />
 
-  <label>Last Name: </label>
-  <input type="text" placeholder="Enter lastname" id="lastname" formControlName="lastname" />
-  <br />
-  <br />
-
-  <label>Email: </label>
-  <input type="email" placeholder="Enter email" id="email" formControlName="email" />
-  <br />
+  <label id="email">email: </label>
+  <input type="email" placeholder="Enter email" id="email" name="email" [(ngModel)]="employee.email" />
   <br />
 
-  <label>Age: </label>
-  <input type="number" placeholder="Enter age" id="age" formControlName="age" />
-  <br />
+  <label id="age">age: </label>
+  <input type="number" placeholder="Enter age" id="age" name="age" [(ngModel)]="employee.age" />
   <br />
 
-  <button>Submit Form</button>
+  <button>Submit Details</button>
 </form>

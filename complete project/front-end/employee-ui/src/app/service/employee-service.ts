@@ -7,21 +7,14 @@ import { Employee } from '../classes/employee';
   providedIn: 'root',
 })
 export class EmployeeService {
-  private baseGetEmployeesURl: string = 'http://localhost:8080/v1/employees/all';
-  private baseCreateEmployeesURl: string = 'http://localhost:8080/v1/employees/add';
+  private baseURl: string = 'http://localhost:8080/v1/employees';
   constructor(private httpClient: HttpClient) {}
 
   public getEmployeeList(): Observable<Employee[]> {
-    return this.httpClient.get<Employee[]>(this.baseGetEmployeesURl);
+    return this.httpClient.get<Employee[]>(this.baseURl);
   }
 
   public createEmployee(employee: Employee): Observable<object> {
-    // The default id of 0 makes the backend treat the entity as existing, so omit ids on create.
-    const { id: _employeeId, address, ...employeeData } = employee;
-    const { id: _addressId, ...addressData } = address;
-    return this.httpClient.post(this.baseCreateEmployeesURl, {
-      ...employeeData,
-      address: addressData,
-    });
+    return this.httpClient.post(this.baseURl, employee);
   }
 }
