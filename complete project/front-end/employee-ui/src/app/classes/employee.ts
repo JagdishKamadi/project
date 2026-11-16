@@ -5,8 +5,8 @@ export class Employee {
     public id?: number,
     public firstName?: string,
     public lastName?: string,
-    public age?: number ,
-    public email?: string ,
+    public age?: number,
+    public email?: string,
     public address: Address = new Address(),
   ) {}
 }

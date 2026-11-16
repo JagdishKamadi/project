@@ -11,9 +11,9 @@ import { EmployeeService } from '../../service/employee-service';
 export class ListEmployeeComponent implements OnInit {
   employees = signal<Employee[]>([]);
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(private readonly employeeService: EmployeeService) {}
 
   ngOnInit(): void {
-    this.employeeService.getEmployeeList().subscribe((data) => this.employees.set(data));
+    this.employeeService.getAllEmployees().subscribe((employees) => this.employees.set(employees));
   }
 }

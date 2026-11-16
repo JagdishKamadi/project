@@ -7,14 +7,15 @@ import { Employee } from '../classes/employee';
   providedIn: 'root',
 })
 export class EmployeeService {
-  private baseURl: string = 'http://localhost:8080/v1/employees';
-  constructor(private httpClient: HttpClient) {}
+  private readonly baseUrl = 'http://localhost:8080/v1/employees';
 
-  public getEmployeeList(): Observable<Employee[]> {
-    return this.httpClient.get<Employee[]>(this.baseURl);
+  constructor(private readonly httpClient: HttpClient) {}
+
+  getAllEmployees(): Observable<Employee[]> {
+    return this.httpClient.get<Employee[]>(this.baseUrl);
   }
 
-  public createEmployee(employee: Employee): Observable<object> {
-    return this.httpClient.post(this.baseURl, employee);
+  createEmployee(employee: Employee): Observable<Employee> {
+    return this.httpClient.post<Employee>(this.baseUrl, employee);
   }
 }

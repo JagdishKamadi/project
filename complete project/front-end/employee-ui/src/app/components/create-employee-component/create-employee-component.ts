@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Employee } from '../../classes/employee';
 import { EmployeeService } from '../../service/employee-service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-employee-component',
@@ -15,26 +14,18 @@ export class CreateEmployeeComponent {
   employee: Employee = new Employee();
 
   constructor(
-    private employeeService: EmployeeService,
-    private router: Router,
+    private readonly employeeService: EmployeeService,
+    private readonly router: Router,
   ) {}
 
-  private saveEmployee(): void {
+  onSubmit(): void {
     this.employeeService.createEmployee(this.employee).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.goToEmployeeListPage();
-      },
-      error: (err) => console.log(err),
+      next: () => this.navigateToEmployeeList(),
+      error: (error) => console.error('Failed to create employee', error),
     });
   }
 
-  private goToEmployeeListPage(): void {
+  private navigateToEmployeeList(): void {
     this.router.navigate(['/employees']);
-  }
-
-  public onSubmit(): void {
-    console.log('Employee Data', this.employee);
-    this.saveEmployee();
   }
 }
