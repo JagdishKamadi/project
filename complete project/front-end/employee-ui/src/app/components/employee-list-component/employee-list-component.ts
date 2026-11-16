@@ -8,7 +8,7 @@ import { EmployeeService } from '../../service/employee-service';
   templateUrl: './employee-list-component.html',
   styleUrl: './employee-list-component.css',
 })
-export class EmployeeListComponent implements OnInit {
+export class ListEmployeeComponent implements OnInit {
   employees = signal<Employee[]>([]);
 
   constructor(private employeeService: EmployeeService) {}
