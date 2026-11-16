@@ -3,13 +3,13 @@ server:
 
 spring:
   application:
-    name: student-service
+    name: employee-service
   main:
     banner-mode: off
 
   # Database Connection
   datasource:
-    url: jdbc:mysql://localhost:3306/student_db
+    url: jdbc:mysql://localhost:3306/employee_db
     username: ${USERNAME}
     password: ${PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
