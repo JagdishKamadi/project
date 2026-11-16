@@ -1,15 +1,26 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Employee Management System</title>
-  </head>
-  <body>
-    <header></header>
-    <main>
-      <app-employee-list-component />
-    </main>
-    <footer></footer>
-  </body>
-</html>
+<div class="d-flex flex-column min-vh-100">
+  <header>
+    <nav class="navbar navbar-expand navbar-dark bg-primary">
+      <div class="container-fluid">
+        <a class="navbar-brand" routerLink="employees">Employee App</a>
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="employees" routerLinkActive="active">Employee List</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="flex-grow-1 py-4">
+    <div class="container-fluid">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+
+  <footer class="bg-dark text-white text-center py-3 mt-auto">
+    <div class="container">
+      <span>&copy; All rights reserved @jk.com</span>
+    </div>
+  </footer>
+</div>
