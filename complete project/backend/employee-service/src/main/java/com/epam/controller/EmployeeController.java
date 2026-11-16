@@ -18,13 +18,13 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<EmployeeDTO> add(@RequestBody EmployeeDTO employeeDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.save(employeeDTO));
+    @PostMapping
+    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.createEmployee(employeeDTO));
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<EmployeeDTO>> getAllEmployees() {
-        return ResponseEntity.ok(employeeService.getEmployees());
+        return ResponseEntity.ok(employeeService.getAllEmployees());
     }
 }

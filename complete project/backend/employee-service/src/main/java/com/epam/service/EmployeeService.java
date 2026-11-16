@@ -5,6 +5,6 @@ import com.epam.dto.EmployeeDTO;
 import java.util.List;
 
 public interface EmployeeService {
-    EmployeeDTO save(EmployeeDTO employeeDTO);
-    List<EmployeeDTO> getEmployees();
+    EmployeeDTO createEmployee(EmployeeDTO employeeDTO);
+    List<EmployeeDTO> getAllEmployees();
 }
