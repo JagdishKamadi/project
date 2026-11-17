@@ -30,7 +30,7 @@ public class EmployeeController {
 
     @GetMapping("{employeeId}")
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable Integer employeeId) {
-        return ResponseEntity.status(HttpStatus.FOUND).body(employeeService.getEmployee(employeeId));
+        return ResponseEntity.ok(employeeService.getEmployee(employeeId));
     }
 
     @PutMapping("{employeeId}")

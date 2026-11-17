@@ -1,4 +1,3 @@
-
 package com.epam.model;
 
 import jakarta.persistence.*;
