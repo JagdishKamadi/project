@@ -24,4 +24,8 @@ export class ListEmployeeComponent implements OnInit {
   updateEmployee(employeeId?: number) {
     this.router.navigate(['updateEmployee', employeeId]);
   }
+
+  deleteEmployee(employeeId?: number) {
+   this.router.navigate(['deleteEmployee', employeeId]);
+  }
 }
