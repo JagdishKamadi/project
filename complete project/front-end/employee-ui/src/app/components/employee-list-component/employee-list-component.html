@@ -21,6 +21,7 @@
           <th>Country</th>
           <th>Pincode</th>
           <th>Address Type</th>
+          <th style="color: lightblue">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -43,6 +44,9 @@
             <td>{{ e.address?.country }}</td>
             <td>{{ e.address?.pincode }}</td>
             <td>{{ e.address?.addressType }}</td>
+            <td>
+              <button (click)="updateEmployee(e.id)" class="btn btn-info">Update</button>
+            </td>
           </tr>
         }
       </tbody>
