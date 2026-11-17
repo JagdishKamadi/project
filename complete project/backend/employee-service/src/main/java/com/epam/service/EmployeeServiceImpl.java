@@ -1,6 +1,7 @@
 package com.epam.service;
 
 import com.epam.dto.EmployeeDTO;
+import com.epam.exception.EmployeeNotFoundException;
 import com.epam.model.Employee;
 import com.epam.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -33,5 +34,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findAll().stream()
                 .map(employee -> objectMapper.convertValue(employee, EmployeeDTO.class))
                 .toList();
+    }
+
+    @Override
+    public EmployeeDTO getEmployee(Integer employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+        return objectMapper.convertValue(employee, EmployeeDTO.class);
     }
 }
