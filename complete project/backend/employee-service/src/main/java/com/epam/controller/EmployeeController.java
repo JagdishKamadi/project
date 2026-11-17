@@ -37,4 +37,10 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeDTO employeeDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(employeeService.updateEmployee(employeeId, employeeDTO));
     }
+
+    @DeleteMapping("{employeeId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable Integer employeeId) {
+        employeeService.deleteEmployee(employeeId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Employee deleted for id " + employeeId);
+    }
 }

@@ -60,6 +60,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return objectMapper.convertValue(savedEmployee, EmployeeDTO.class);
     }
 
+    @Override
+    public void deleteEmployee(Integer employeeId) {
+        employeeRepository.deleteById(employeeId);
+    }
+
     private void updateEmployeeFields(Employee employee, EmployeeDTO employeeDTO) {
         copyIfNotBlank(employeeDTO.getFirstName(), employee::setFirstName);
         copyIfNotBlank(employeeDTO.getLastName(), employee::setLastName);
