@@ -32,4 +32,9 @@ public class EmployeeController {
     public ResponseEntity<EmployeeDTO> getEmployee(@PathVariable Integer employeeId) {
         return ResponseEntity.status(HttpStatus.FOUND).body(employeeService.getEmployee(employeeId));
     }
+
+    @PutMapping("{employeeId}")
+    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeDTO employeeDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(employeeService.updateEmployee(employeeId, employeeDTO));
+    }
 }

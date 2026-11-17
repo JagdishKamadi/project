@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface EmployeeService {
     EmployeeDTO createEmployee(EmployeeDTO employeeDTO);
+
     List<EmployeeDTO> getAllEmployees();
+
     EmployeeDTO getEmployee(Integer employeeId);
+
+    EmployeeDTO updateEmployee(Integer employeeId, EmployeeDTO employeeDTO);
 }
