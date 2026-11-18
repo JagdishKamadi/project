@@ -21,11 +21,15 @@ export class ListEmployeeComponent implements OnInit {
     this.employeeService.getAllEmployees().subscribe((employees) => this.employees.set(employees));
   }
 
+  viewEmployee(employeeId?: number) {
+    this.router.navigate(['viewEmployee', employeeId]);
+  }
+
   updateEmployee(employeeId?: number) {
     this.router.navigate(['updateEmployee', employeeId]);
   }
 
   deleteEmployee(employeeId?: number) {
-   this.router.navigate(['deleteEmployee', employeeId]);
+    this.router.navigate(['deleteEmployee', employeeId]);
   }
 }

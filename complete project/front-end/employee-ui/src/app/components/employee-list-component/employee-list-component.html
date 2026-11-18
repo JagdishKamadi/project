@@ -45,7 +45,10 @@
             <td>{{ e.address?.pincode }}</td>
             <td>{{ e.address?.addressType }}</td>
             <td style="white-space: nowrap">
-              <button (click)="updateEmployee(e.id)" class="btn btn-info">Update</button>
+              <button (click)="viewEmployee(e.id)" class="btn btn-primary">View</button>
+              <button (click)="updateEmployee(e.id)" class="btn btn-info" style="margin-left: 5px">
+                Update
+              </button>
               <button
                 (click)="deleteEmployee(e.id)"
                 class="btn btn-danger"

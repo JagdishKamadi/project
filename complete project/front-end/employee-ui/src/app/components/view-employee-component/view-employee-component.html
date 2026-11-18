@@ -1,0 +1,99 @@
+<div class="container mt-4">
+  <div class="card p-3" style="max-width: 400px">
+    <h5 class="text-center mb-3">Employee Details</h5>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">ID</div>
+      <div class="col-7">{{ employee().id }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">First Name</div>
+      <div class="col-7">{{ employee().firstName }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Last Name</div>
+      <div class="col-7">{{ employee().lastName }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Email</div>
+      <div class="col-7">{{ employee().email }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Age</div>
+      <div class="col-7">{{ employee().age }}</div>
+    </div>
+  </div>
+
+  <div class="card p-3 mt-3" style="max-width: 400px">
+    <h5 class="text-center mb-3">Address Details</h5>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">ID</div>
+      <div class="col-7">{{ employee().address.id }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">House Number</div>
+      <div class="col-7">{{ employee().address.houseNumber }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Building Name</div>
+      <div class="col-7">{{ employee().address.buildingName }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Street</div>
+      <div class="col-7">{{ employee().address.street }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Landmark</div>
+      <div class="col-7">{{ employee().address.landmark }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Locality</div>
+      <div class="col-7">{{ employee().address.locality }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Village</div>
+      <div class="col-7">{{ employee().address.village }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">City</div>
+      <div class="col-7">{{ employee().address.city }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">District</div>
+      <div class="col-7">{{ employee().address.district }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">State</div>
+      <div class="col-7">{{ employee().address.state }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Country</div>
+      <div class="col-7">{{ employee().address.country }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Pincode</div>
+      <div class="col-7">{{ employee().address.pincode }}</div>
+    </div>
+
+    <div class="row mb-2">
+      <div class="col-5 fw-bold">Address Type</div>
+      <div class="col-7">{{ employee().address.addressType }}</div>
+    </div>
+  </div>
+</div>
