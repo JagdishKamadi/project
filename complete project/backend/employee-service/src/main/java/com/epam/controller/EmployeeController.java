@@ -2,6 +2,7 @@ package com.epam.controller;
 
 import com.epam.dto.EmployeeDTO;
 import com.epam.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<EmployeeDTO> createEmployee(@Valid @RequestBody EmployeeDTO employeeDTO) {
         return ResponseEntity.status(HttpStatus.CREATED).body(employeeService.createEmployee(employeeDTO));
     }
 
@@ -34,7 +35,7 @@ public class EmployeeController {
     }
 
     @PutMapping("{employeeId}")
-    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Integer employeeId, @RequestBody EmployeeDTO employeeDTO) {
+    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Integer employeeId, @Valid @RequestBody EmployeeDTO employeeDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(employeeService.updateEmployee(employeeId, employeeDTO));
     }
 
