@@ -2,6 +2,7 @@ package com.epam.service;
 
 import com.epam.dto.AddressDTO;
 import com.epam.dto.EmployeeDTO;
+import com.epam.exception.EmployeeNotFoundException;
 import com.epam.model.Address;
 import com.epam.model.Employee;
 import com.epam.repository.EmployeeRepository;
@@ -15,9 +16,11 @@ import tools.jackson.databind.ObjectMapper;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeServiceImplTest {
@@ -104,6 +107,12 @@ class EmployeeServiceImplTest {
     }
 
     @Test
+    void testCreateEmployeeThrowsExceptionWhenEmployeeDTOIsNull() {
+        assertThrows(NullPointerException.class, () -> employeeService.createEmployee(null));
+        verifyNoInteractions(employeeRepository);
+    }
+
+    @Test
     void testGetAllEmployees() {
         List<Employee> employeeList = Collections.singletonList(employee);
         List<EmployeeDTO> expectedEmployeeDTOs = Collections.singletonList(employeeDTO);
@@ -113,5 +122,59 @@ class EmployeeServiceImplTest {
         List<EmployeeDTO> allEmployees = employeeService.getAllEmployees();
 
         assertEquals(expectedEmployeeDTOs, allEmployees);
+    }
+
+    @Test
+    void testGetEmployee() {
+        Integer employeeId = 1;
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.ofNullable(employee));
+        when(objectMapper.convertValue(employee, EmployeeDTO.class)).thenReturn(employeeDTO);
+        EmployeeDTO employee1 = employeeService.getEmployee(employeeId);
+        assertEquals(employeeDTO, employee1);
+    }
+
+    @Test
+    void testGetEmployeeThrowExceptionIfEmployeeNotFound() {
+        Integer employeeId = -1;
+        when(employeeRepository.findById(employeeId)).thenThrow(new EmployeeNotFoundException(employeeId));
+        assertThrows(EmployeeNotFoundException.class, () -> employeeService.getEmployee(employeeId));
+    }
+
+    @Test
+    void testUpdateEmployee() {
+        Integer employeeId = 1;
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.ofNullable(employee));
+        employeeDTO.setFirstName("Justin");
+        employeeDTO.getAddress().setCity("Svalbard ");
+        when(employeeRepository.save(employee)).thenReturn(employee);
+        when(objectMapper.convertValue(employee, EmployeeDTO.class)).thenReturn(employeeDTO);
+        EmployeeDTO employeeDTO1 = employeeService.updateEmployee(employeeId, employeeDTO);
+        assertEquals(employeeDTO, employeeDTO1);
+    }
+
+    @Test
+    void testUpdateEmployeeThrowsExceptionIfEmployeeNotFound() {
+        Integer employeeId = -1;
+        when(employeeRepository.findById(employeeId)).thenReturn(Optional.empty());
+
+        assertThrows(EmployeeNotFoundException.class,
+                () -> employeeService.updateEmployee(employeeId, employeeDTO));
+        verify(employeeRepository, never()).save(any());
+    }
+
+    @Test
+    void testDeleteEmployee() {
+        Integer employeeId = 1;
+        employeeService.deleteEmployee(employeeId);
+        verify(employeeRepository, times(1)).deleteById(employeeId);
+    }
+
+    @Test
+    void testDeleteEmployeePropagatesExceptionWhenRepositoryFails() {
+        Integer employeeId = 1;
+        doThrow(new RuntimeException("DB error")).when(employeeRepository).deleteById(employeeId);
+
+        assertThrows(RuntimeException.class, () -> employeeService.deleteEmployee(employeeId));
+        verify(employeeRepository, times(1)).deleteById(employeeId);
     }
 }
