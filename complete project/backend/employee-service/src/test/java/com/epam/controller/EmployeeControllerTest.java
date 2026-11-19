@@ -2,6 +2,7 @@ package com.epam.controller;
 
 import com.epam.dto.AddressDTO;
 import com.epam.dto.EmployeeDTO;
+import com.epam.exception.EmployeeNotFoundException;
 import com.epam.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,9 +15,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import tools.jackson.databind.ObjectMapper;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(EmployeeController.class)
@@ -30,7 +35,7 @@ class EmployeeControllerTest {
 
     private String employeeDTOJSON;
     private EmployeeDTO employeeDTO;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
@@ -55,7 +60,7 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void testCreateEmployeeEndpoint() throws Exception {
+    void testCreateEmployeeWhenInputIsValid() throws Exception {
         when(employeeService.createEmployee(any(EmployeeDTO.class))).thenReturn(employeeDTO);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/v1/employees")
@@ -66,7 +71,7 @@ class EmployeeControllerTest {
     }
 
     @Test
-    void testCreateEmployeeEndpointThrowExceptionWhenObjectIsNotValid() throws Exception {
+    void testCreateEmployeeWhenInputIsInvalid() throws Exception {
         employeeDTO.setFirstName("");
         employeeDTOJSON = objectMapper.writeValueAsString(employeeDTO);
 
@@ -80,5 +85,94 @@ class EmployeeControllerTest {
         String responseBody = response.getContentAsString();
         System.out.println(responseBody);
         assertTrue(responseBody.contains("firstName should not be blank"));
+    }
+
+    @Test
+    void testGetAllEmployeesWhenEmployeesExist() throws Exception {
+        List<EmployeeDTO> employeeDTOS = Arrays.asList(employeeDTO, employeeDTO);
+        when(employeeService.getAllEmployees()).thenReturn(employeeDTOS);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/v1/employees").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+        String contentAsString = response.getContentAsString();
+        assertAll(() -> assertTrue(contentAsString.contains("Joy")),
+                () -> assertTrue(contentAsString.contains("Pune")),
+                () -> assertTrue(contentAsString.contains("HOME"))
+        );
+    }
+
+    @Test
+    void testGetEmployeeWhenEmployeeIdIsValid() throws Exception {
+        Integer employeeId = 1;
+        when(employeeService.getEmployee(employeeId)).thenReturn(employeeDTO);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.get("/v1/employees/{employeeId}", employeeId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        String contentAsString = response.getContentAsString();
+        assertAll(() -> assertTrue(contentAsString.contains("Joy")),
+                () -> assertTrue(contentAsString.contains("joy@gmail.com")),
+                () -> assertTrue(contentAsString.contains("Pune")),
+                () -> assertTrue(contentAsString.contains("HOME"))
+        );
+        verify(employeeService).getEmployee(employeeId);
+    }
+
+    @Test
+    void testUpdateEmployeeWhenEmployeeIdIsValid() throws Exception {
+        Integer employeeId = 1;
+        when(employeeService.updateEmployee(employeeId, employeeDTO)).thenReturn(employeeDTO);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.put("/v1/employees/{employeeId}", employeeId)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(employeeDTOJSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        String contentAsString = response.getContentAsString();
+        assertAll(() -> assertTrue(contentAsString.contains("Joy")),
+                () -> assertTrue(contentAsString.contains("joy@gmail.com")),
+                () -> assertTrue(contentAsString.contains("Pune")),
+                () -> assertTrue(contentAsString.contains("HOME"))
+        );
+        verify(employeeService).updateEmployee(employeeId, employeeDTO);
+    }
+
+    @Test
+    void testUpdateEmployeeWhenEmployeeNotFound() throws Exception {
+        Integer employeeId = 11;
+        when(employeeService.updateEmployee(employeeId, employeeDTO)).thenThrow(EmployeeNotFoundException.class);
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.put("/v1/employees/{employeeId}", employeeId)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(employeeDTOJSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andReturn()
+                .getResponse();
+
+        assertTrue(response.getContentAsString().contains("Employee Not Found"));
+        verify(employeeService).updateEmployee(employeeId, employeeDTO);
+    }
+
+    @Test
+    void testDeleteEmployeeWhenEmployeeIdIsValid() throws Exception {
+        Integer employeeId = 1;
+
+        MockHttpServletResponse response = mockMvc.perform(MockMvcRequestBuilders.delete("/v1/employees/{employeeId}", employeeId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNoContent())
+                .andReturn()
+                .getResponse();
+
+        assertTrue(response.getContentAsString().contains("Employee deleted for id " + employeeId));
+        verify(employeeService, times(1)).deleteEmployee(employeeId);
     }
 }

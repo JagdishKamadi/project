@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200") // this is for angular UI endpoint
 @RestController
 @RequestMapping("/v1/employees")
 public class EmployeeController {
